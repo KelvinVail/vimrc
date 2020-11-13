@@ -5,36 +5,41 @@ filetype off		" required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
+Plugin 'vim-scripts/indentpython.vim'
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'jnurmine/Zenburn'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+let python_highligh_all=1
+syntax on
+set nu
+set encoding=utf-8
 set splitbelow
 set splitright
+set foldmethod=indent
+set foldlevel=99
 
-if has('statusline')
-    set laststatus=2
-    set statusline=%<%f\    "Filename
-    set statusline+=%w%h%m%r    "options
-    set statusline+=%{fugitive#statusline()}
-    set statusline+=\ [%{&ff}/%y]   "filetype
-    set statusline+=[%{getcwd()}]   "Current Dir
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-    let g:syntastic_enable_signs=1
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%% "right aligned file nav info
-endif
+colors zenburn
 
-"split navigation
+" split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" fold with spacebar
+nnoremap <space> za
+
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 au BufNewFile,BufRead *.py
 	set tabstop=4
@@ -45,45 +50,10 @@ au BufNewFile,BufRead *.py
 	set autoindent
 	set fileformat=unix
 
-au BufNewFile,BufRead *.sol
-	set tabstop=2
-	set softtabstop=2
-	set shiftwidth=4
-	set textwidth=79
-	set expandtab
-	set autoindent
-	set fileformat=unix
-
-Plugin 'vim-scripts/indentpython.vim'
-
-"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-set encoding=utf-8
-
-Bundle 'Valloric/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g	:YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-Plugin 'scrooloose/syntastic'
-Plugin 'tomlion/vim-solidity'
-Plugin 'nvie/vim-flake8'
-let python_highligh_all=1
-"syntax on
-
-hi statusline ctermfg=0 ctermbg=Green cterm=NONE
-
-Plugin 'jnurmine/Zenburn'
-
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore file in NERDTree
-
-Plugin 'kien/ctrlp.vim'
-
-Plugin 'tpope/vim-fugitive'
-
-
-set nu
 
 nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<cr>
 
